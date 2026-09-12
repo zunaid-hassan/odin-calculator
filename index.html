@@ -4,10 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link href="style.css" rel="stylesheet"></link>
+    <link href="style.css" rel="stylesheet" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
+    </style>
+
     <script src="script.js" defer></script>
   </head>
   <body>
     <h1>Calculator</h1>
+    <div id="calculator-container">
+      <div id="display"></div>
+      <div id="buttons">
+        <div id="operationBtn-container">
+          <button id="add">+</button>
+          <button id="subtract">-</button>
+          <button id="multiply">×</button>
+          <button id="divide">÷</button>
+        </div>
+
+        <div id="numpad-container">
+          <button id="1Btn">1</button>
+          <button id="2Btn">2</button>
+          <button id="3Btn">3</button>
+          <button id="4Btn">4</button>
+          <button id="5Btn">5</button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
