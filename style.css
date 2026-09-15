@@ -40,7 +40,7 @@ h1 {
 }
 
 #display {
-  background-color: #fff8de;
+  background: #fff8de;
   border: 2px solid#BFC6C4;
   width: 250px;
   height: 100px;
@@ -63,18 +63,18 @@ button {
   background: linear-gradient(180deg, #f7bd87 0%, #f2a65a 50%);
   border-style: outset;
   border-radius: 5px;
+
+  /* transition-duration: 0.2s; */
 }
 
 button:hover {
-  background-color: #f0c294;
-  transition-duration: 0.2s;
+  background: #f0c294;
 }
 
 button:active {
   /* background: #f0c294; */
 
   background: linear-gradient(180deg, #f2a65a 0%, #f7bd87 50%);
-  transition-duration: 0.2s;
   border-style: inset;
 }
 
@@ -95,7 +95,7 @@ button:active {
 
 footer {
   margin-top: auto;
-  background-color: #576a8f;
+  background: #576a8f;
   color: #fff8de;
   font-weight: bold;
   padding: 10px;

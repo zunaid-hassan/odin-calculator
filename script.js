@@ -17,8 +17,8 @@ function divide(firstNumber, secondNumber) {
 }
 
 function operate(operatorStr, firstNumberStr, secondNumberStr) {
-  let firstNumber = parseInt(firstNumberStr);
-  let secondNumber = parseInt(secondNumberStr);
+  let firstNumber = parseFloat(firstNumberStr);
+  let secondNumber = parseFloat(secondNumberStr);
 
   if (operatorStr === "+") {
     return add(firstNumber, secondNumber);
@@ -52,46 +52,6 @@ let firstNumberStr = "";
 let secondNumberStr = "";
 let operatorStr = "";
 
-// function btnInteraction(event) {
-//   if (event.target.tagName !== "BUTTON") {
-//     return;
-//   }
-
-//   if (event.target.id === "allClearBtn" || event.target.id === "delBtn") {
-//     return;
-//   }
-
-//   if ("0123456789".includes(event.target.value)) {
-//     const text = document.createElement("span");
-//     text.classList = "display-digit";
-//     text.textContent = event.target.value;
-//     display.appendChild(text);
-//     // lg(text);
-
-//     firstNumberStr += event.target.value;
-//     // lg(firstNumberStr);
-//   } else if (
-//     "-*+/".includes(event.target.value) &&
-//     display.lastElementChild !== null
-//   ) {
-//     const text = document.createElement("span");
-//     text.classList = "display-digit";
-//     text.textContent = event.target.textContent;
-//     lg(text);
-//     if ("-×+÷".includes(display.lastElementChild.textContent)) {
-//       display.removeChild(display.lastElementChild);
-//       display.appendChild(text);
-//       //   lg(display.lastElementChild);
-//     } else {
-//       display.appendChild(text);
-//     }
-
-//     operator = event.target.value;
-//     // lg("operator: " + operator);
-//     // lg(display.lastElementChild.textContent);
-//   }
-// }
-
 function btnInteraction(event) {
   const target = event.target;
   const targetValue = event.target.value;
@@ -108,7 +68,14 @@ function btnInteraction(event) {
   }
 
   if (firstNumberStr === "" && operatorStr === "" && secondNumberStr === "") {
-    if ("0123456789".includes(targetValue)) {
+    if ("0123456789".includes(targetValue) && !firstNumberStr.includes(".")) {
+      firstNumberStr += targetValue;
+
+      const text = document.createElement("span");
+      text.classList = "display-digit";
+      text.textContent = targetValue;
+      display.appendChild(text);
+    } else if (targetValue === "." && !firstNumberStr.includes(".")) {
       firstNumberStr += targetValue;
 
       const text = document.createElement("span");
@@ -124,6 +91,13 @@ function btnInteraction(event) {
     secondNumberStr === ""
   ) {
     if ("0123456789".includes(targetValue)) {
+      firstNumberStr += targetValue;
+
+      const text = document.createElement("span");
+      text.classList = "display-digit";
+      text.textContent = targetValue;
+      display.appendChild(text);
+    } else if (targetValue === "." && !firstNumberStr.includes(".")) {
       firstNumberStr += targetValue;
 
       const text = document.createElement("span");
@@ -151,6 +125,13 @@ function btnInteraction(event) {
       text.textContent = target.textContent;
       display.removeChild(display.lastElementChild);
       display.appendChild(text);
+    } else if (targetValue === "." && !secondNumberStr.includes(".")) {
+      secondNumberStr += targetValue;
+
+      const text = document.createElement("span");
+      text.classList = "display-digit";
+      text.textContent = targetValue;
+      display.appendChild(text);
     } else if ("0123456789".includes(targetValue)) {
       secondNumberStr += targetValue;
 
@@ -167,6 +148,15 @@ function btnInteraction(event) {
       text.classList = "display-digit";
       text.textContent = targetValue;
       display.appendChild(text);
+    } else if (targetValue === "." && !secondNumberStr.includes(".")) {
+      secondNumberStr += targetValue;
+
+      const text = document.createElement("span");
+      text.classList = "display-digit";
+      text.textContent = targetValue;
+      display.appendChild(text);
+    } else if (targetValue === "." && secondNumberStr.includes(".")) {
+      return;
     } else if ("-*+/".includes(targetValue)) {
       firstNumberStr = operate(
         operatorStr,
@@ -178,47 +168,52 @@ function btnInteraction(event) {
 
       while (display.firstChild) {
         display.removeChild(display.firstChild);
-        const text = document.createElement("span");
-        text.classList = "display-digit";
-        text.textContent = firstNumberStr;
-        display.appendChild(text);
       }
+
+      const text = document.createElement("span");
+      text.classList = "display-digit";
+      text.textContent = firstNumberStr;
+      display.appendChild(text);
+
+      const textOperator = document.createElement("span");
+      textOperator.classList = "display-digit";
+      textOperator.textContent = operatorStr;
+      display.appendChild(textOperator);
+    } else {
+      firstNumberStr = operate(
+        operatorStr,
+        firstNumberStr,
+        secondNumberStr,
+      ).toString();
+      while (display.firstChild) {
+        display.removeChild(display.firstChild);
+      }
+      operatorStr = "";
+      secondNumberStr = "";
+
+      const text = document.createElement("span");
+      text.classList = "display-digit";
+      text.textContent = firstNumberStr;
+      display.appendChild(text);
     }
   }
   lg("---------------------");
   lg("firstNumberStr: " + firstNumberStr);
   lg("operatorStr: " + operatorStr);
   lg("secondNumberStr: " + secondNumberStr);
+}
 
-  // if ("0123456789".includes(event.target.value)) {
-  //   const text = document.createElement("span");
-  //   text.classList = "display-digit";
-  //   text.textContent = event.target.value;
-  //   display.appendChild(text);
-  //   // lg(text);
+function updateDisplay(value) {
+  const text = document.createElement("span");
+  text.classList = "display-digit";
+  text.textContent = value;
+  display.appendChild(text);
+}
 
-  //   firstNumberStr += event.target.value;
-  //   // lg(firstNumberStr);
-  // } else if (
-  //   "-*+/".includes(event.target.value) &&
-  //   display.lastElementChild !== null
-  // ) {
-  //   const text = document.createElement("span");
-  //   text.classList = "display-digit";
-  //   text.textContent = event.target.textContent;
-  //   lg(text);
-  //   if ("-×+÷".includes(display.lastElementChild.textContent)) {
-  //     display.removeChild(display.lastElementChild);
-  //     display.appendChild(text);
-  //     //   lg(display.lastElementChild);
-  //   } else {
-  //     display.appendChild(text);
-  //   }
-
-  //   operator = event.target.value;
-  //   // lg("operator: " + operator);
-  //   // lg(display.lastElementChild.textContent);
-  // }
+function clearDisplay() {
+  while (display.firstChild) {
+    display.removeChild(display.firstChild);
+  }
 }
 
 btnContainer.addEventListener("click", btnInteraction);
@@ -233,6 +228,11 @@ acBtn.addEventListener("click", () => {
   firstNumberStr = "";
   secondNumberStr = "";
   operatorStr = "";
+
+  lg("---------------------");
+  lg("firstNumberStr: " + firstNumberStr);
+  lg("operatorStr: " + operatorStr);
+  lg("secondNumberStr: " + secondNumberStr);
 });
 
 const delBtn = document.querySelector("#delBtn");
