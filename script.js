@@ -13,6 +13,9 @@ function multiply(firstNumber, secondNumber) {
 }
 
 function divide(firstNumber, secondNumber) {
+  if (secondNumber === 0) {
+    return "Nice try!";
+  }
   return firstNumber / secondNumber;
 }
 
