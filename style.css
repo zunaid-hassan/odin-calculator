@@ -48,7 +48,8 @@ h1 {
   padding: 10px;
   border-radius: 10px;
   display: flex;
-  flex-direction: row;
+  /* flex-direction: row-reverse; */
+  justify-content: flex-end;
   font-family: "JetBrains Mono", monospace;
   font-size: 30px;
   font-weight: bold;
