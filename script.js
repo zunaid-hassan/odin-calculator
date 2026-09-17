@@ -298,19 +298,43 @@ function deleteBtnInteraction(event) {
 }
 
 //  Keyboard Support
-const bodyTxt = document.querySelector("body");
-bodyTxt.addEventListener("keydown", (event) => {
-  if ("0123456789".includes(event.key)) {
-    lg(`You pressed "${event.key}".`);
-    const text = document.createElement("span");
-    text.classList = "display-digit";
-    text.textContent = event.key;
-    display.appendChild(text);
-  } else if ("-=*+/".includes(event.key)) {
-    lg(`You pressed "${event.key}".`);
-    const text = document.createElement("span");
-    text.classList = "display-digit";
-    text.textContent = event.key;
-    display.appendChild(text);
+// const bodyTxt = document.querySelector("body");
+// bodyTxt.addEventListener("keydown", (event) => {
+//   if ("0123456789".includes(event.key)) {
+//     lg(`You pressed "${event.key}".`);
+//     const text = document.createElement("span");
+//     text.classList = "display-digit";
+//     text.textContent = event.key;
+//     display.appendChild(text);
+//   } else if ("-=*+/".includes(event.key)) {
+//     lg(`You pressed "${event.key}".`);
+//     const text = document.createElement("span");
+//     text.classList = "display-digit";
+//     text.textContent = event.key;
+//     display.appendChild(text);
+//   }
+// });
+
+const kbdEvent = document.querySelector("body");
+kbdEvent.addEventListener("keydown", kbdInteraction);
+
+function kbdInteraction(event) {
+  const eventKey = event.key;
+  if (eventKey === "Delete" || eventKey === "Backspace") {
+    if (eventKey === "Backspace") {
+      document.querySelector("#delBtn").click();
+    } else {
+      document.querySelector("#allClearBtn").click();
+    }
+    // lg(eventKey);
+  } else if ("0123456789-*+/.".includes(eventKey)) {
+    // const eventKeyNum = parseInt(eventKey);
+    document.querySelector(`button[value="${eventKey}"]`).click();
+  } else if (eventKey === "Enter") {
+    document.querySelector(`button[value="="]`).click();
+    lg(eventKey);
   }
-});
+}
+
+// let kbdEvent = new Event("keydown");
+// lg(kbdEvent);
