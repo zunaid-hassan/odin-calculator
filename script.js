@@ -131,7 +131,9 @@ function btnInteraction(event) {
 
       updateDisplay();
     }
-  } else if (
+  }
+  // BLOCK 4; only firstNumberStr filled operatorStr filled
+  else if (
     firstNumberStr !== "" &&
     firstNumberStr !== "." &&
     operatorStr !== "" &&
@@ -153,7 +155,9 @@ function btnInteraction(event) {
 
       updateDisplay();
     }
-  } else {
+  }
+  // BLOCK 4; all firstNumberStr, operatorStr, and secondNumberStr are filled
+  else {
     if ("0123456789".includes(targetValue)) {
       clearDisplayMsg();
       secondNumberStr += targetValue;
@@ -190,12 +194,7 @@ function btnInteraction(event) {
       updateDisplay();
     }
   }
-  lg("---------------------");
-  lg("firstNumberStr: " + firstNumberStr);
-  lg("operatorStr: " + operatorStr);
-  lg("secondNumberStr: " + secondNumberStr);
-  lg("isResult: " + isResult);
-  lg("displayMsg: " + displayMsg);
+  logVariables();
 }
 
 function updateDisplay() {
@@ -242,6 +241,15 @@ function clearDisplayMsg() {
   }
 }
 
+function logVariables() {
+  lg("---------------------");
+  lg("firstNumberStr: " + firstNumberStr);
+  lg("operatorStr: " + operatorStr);
+  lg("secondNumberStr: " + secondNumberStr);
+  lg("isResult: " + isResult);
+  lg("displayMsg: " + displayMsg);
+}
+
 btnContainer.addEventListener("click", btnInteraction);
 
 const acBtn = document.querySelector("#allClearBtn");
@@ -256,24 +264,21 @@ acBtn.addEventListener("click", () => {
   isResult = false;
 
   updateDisplay();
-  lg("---------------------");
-  lg("firstNumberStr: " + firstNumberStr);
-  lg("operatorStr: " + operatorStr);
-  lg("secondNumberStr: " + secondNumberStr);
-  lg("isResult: " + isResult);
-  lg("displayMsg: " + displayMsg);
+  logVariables();
 });
 
 // Backspace Key Support
 const delBtn = document.querySelector("#delBtn");
 
-delBtn.addEventListener("click", () => {
+delBtn.addEventListener("click", deleteBtnIneraction);
+
+function deleteBtnIneraction(event) {
   let display = document.getElementById("display");
   if (display.lastElementChild) {
-    // lg(display.lastElementChild);
+    lg(display.lastElementChild);
     display.removeChild(display.lastElementChild);
   }
-});
+}
 
 // Keyboard Support
 const bodyTxt = document.querySelector("body");
@@ -292,5 +297,3 @@ bodyTxt.addEventListener("keydown", (event) => {
     display.appendChild(text);
   }
 });
-
-// helloBtn1.addEventListener("click", () => console.log("hi"));
