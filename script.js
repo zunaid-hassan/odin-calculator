@@ -45,9 +45,10 @@ function operate(operatorStr, firstNumberStr, secondNumberStr) {
   }
 }
 
+//  Button Interaction
 const btnContainer = document.querySelector("#buttons-container");
 
-const display = document.querySelector("#display");
+btnContainer.addEventListener("click", btnInteraction);
 
 function btnInteraction(event) {
   const target = event.target;
@@ -197,6 +198,8 @@ function btnInteraction(event) {
   logVariables();
 }
 
+// Display Update
+const display = document.querySelector("#display");
 function updateDisplay() {
   while (display.firstChild) {
     display.removeChild(display.firstChild);
@@ -250,13 +253,13 @@ function logVariables() {
   lg("displayMsg: " + displayMsg);
 }
 
-btnContainer.addEventListener("click", btnInteraction);
+//  AC Button
 
 const acBtn = document.querySelector("#allClearBtn");
 
-acBtn.addEventListener("click", () => {
-  let display = document.getElementById("display");
+acBtn.addEventListener("click", acBtnInteraction);
 
+function acBtnInteraction() {
   firstNumberStr = "";
   secondNumberStr = "";
   operatorStr = "";
@@ -265,22 +268,36 @@ acBtn.addEventListener("click", () => {
 
   updateDisplay();
   logVariables();
-});
+}
 
-// Backspace Key Support
+//  Backspace Key Support
 const delBtn = document.querySelector("#delBtn");
 
-delBtn.addEventListener("click", deleteBtnIneraction);
+delBtn.addEventListener("click", deleteBtnInteraction);
 
-function deleteBtnIneraction(event) {
-  let display = document.getElementById("display");
-  if (display.lastElementChild) {
-    lg(display.lastElementChild);
-    display.removeChild(display.lastElementChild);
+function deleteBtnInteraction(event) {
+  if (displayMsg !== "") {
+    lg(displayMsg);
+    return;
+  } else if (secondNumberStr !== "") {
+    secondNumberStr = secondNumberStr.substring(0, secondNumberStr.length - 1);
+    lg(secondNumberStr);
+    logVariables();
+    updateDisplay();
+  } else if (operatorStr !== "") {
+    operatorStr = "";
+    lg(secondNumberStr);
+    logVariables();
+    updateDisplay();
+  } else if (firstNumberStr !== "" && isResult === false) {
+    firstNumberStr = firstNumberStr.substring(0, firstNumberStr.length - 1);
+    lg(firstNumberStr);
+    logVariables();
+    updateDisplay();
   }
 }
 
-// Keyboard Support
+//  Keyboard Support
 const bodyTxt = document.querySelector("body");
 bodyTxt.addEventListener("keydown", (event) => {
   if ("0123456789".includes(event.key)) {
