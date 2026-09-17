@@ -1,22 +1,33 @@
 const lg = console.log;
 
+let firstNumberStr = "";
+let secondNumberStr = "";
+let operatorStr = "";
+let isResult = false;
+let displayMsg = "";
+
 function add(firstNumber, secondNumber) {
-  return firstNumber + secondNumber;
+  firstNumberStr = firstNumber + secondNumber;
 }
 
 function subtract(firstNumber, secondNumber) {
-  return firstNumber - secondNumber;
+  firstNumberStr = firstNumber - secondNumber;
 }
 
 function multiply(firstNumber, secondNumber) {
-  return parseFloat((firstNumber * secondNumber).toFixed(6));
+  firstNumberStr = parseFloat((firstNumber * secondNumber).toFixed(6));
 }
 
 function divide(firstNumber, secondNumber) {
   if (secondNumber === 0) {
-    return "Nice try!";
+    firstNumberStr = "";
+    secondNumberStr = "";
+    operatorStr = "";
+    isResult = false;
+    displayMsg = "Nice try!";
+  } else {
+    firstNumberStr = parseFloat((firstNumber / secondNumber).toFixed(6));
   }
-  return parseFloat((firstNumber / secondNumber).toFixed(6));
 }
 
 function operate(operatorStr, firstNumberStr, secondNumberStr) {
@@ -24,36 +35,19 @@ function operate(operatorStr, firstNumberStr, secondNumberStr) {
   let secondNumber = parseFloat(secondNumberStr);
 
   if (operatorStr === "+") {
-    return add(firstNumber, secondNumber);
+    add(firstNumber, secondNumber);
   } else if (operatorStr === "-") {
-    return subtract(firstNumber, secondNumber);
+    subtract(firstNumber, secondNumber);
   } else if (operatorStr === "*") {
-    return multiply(firstNumber, secondNumber);
-  } else {
-    return divide(firstNumber, secondNumber);
+    multiply(firstNumber, secondNumber);
+  } else if (operatorStr === "/") {
+    divide(firstNumber, secondNumber);
   }
 }
 
 const btnContainer = document.querySelector("#buttons-container");
 
 const display = document.querySelector("#display");
-
-// function btnInteraction(event) {
-//   if (event.target.tagName !== "BUTTON") {
-//     return;
-//   }
-
-//   if (event.target.id !== "allClearBtn" && event.target.id !== "delBtn") {
-//     const text = document.createElement("span");
-//     text.classList = "display-digit";
-//     text.textContent = event.target.textContent;
-//     display.appendChild(text);
-//     // lg(display.innerHTML);
-//   }
-// }
-let firstNumberStr = "";
-let secondNumberStr = "";
-let operatorStr = "";
 
 function btnInteraction(event) {
   const target = event.target;
@@ -68,34 +62,71 @@ function btnInteraction(event) {
     return;
   }
 
+  // BLOCK 1; all variables empty
   if (firstNumberStr === "" && operatorStr === "" && secondNumberStr === "") {
     if ("0123456789-".includes(targetValue)) {
+      clearDisplayMsg();
       firstNumberStr += targetValue;
 
       updateDisplay();
     } else if (targetValue === "." && !firstNumberStr.includes(".")) {
+      clearDisplayMsg();
       firstNumberStr += targetValue;
 
       updateDisplay();
     } else if ("*+/".includes(targetValue)) {
       return;
     }
-  } else if (
+  }
+  // BLOCK 2; only firstNumberStr filled and is result
+  else if (
     firstNumberStr !== "" &&
+    isResult === true &&
+    operatorStr === "" &&
+    secondNumberStr === ""
+  ) {
+    if ("0123456789.".includes(targetValue)) {
+      clearDisplayMsg();
+      firstNumberStr = targetValue;
+      isResult = false;
+
+      updateDisplay();
+    } else if (targetValue === "." && !firstNumberStr.includes(".")) {
+      clearDisplayMsg();
+      firstNumberStr = "";
+      firstNumberStr += targetValue;
+
+      isResult = false;
+
+      updateDisplay();
+    } else if ("-*+/".includes(targetValue)) {
+      clearDisplayMsg();
+      operatorStr = targetValue;
+
+      updateDisplay();
+    }
+  }
+  // BLOCK 3; only firstNumberStr filled and is not result
+  else if (
+    firstNumberStr !== "" &&
+    isResult === false &&
     operatorStr === "" &&
     secondNumberStr === ""
   ) {
     if ("0123456789".includes(targetValue)) {
+      clearDisplayMsg();
       firstNumberStr += targetValue;
 
       updateDisplay();
     } else if (targetValue === "." && !firstNumberStr.includes(".")) {
+      clearDisplayMsg();
       firstNumberStr += targetValue;
 
       updateDisplay();
     } else if ("-*+/".includes(targetValue) && firstNumberStr === ".") {
       return;
     } else if ("-*+/".includes(targetValue)) {
+      clearDisplayMsg();
       operatorStr = targetValue;
 
       updateDisplay();
@@ -107,24 +138,29 @@ function btnInteraction(event) {
     secondNumberStr === ""
   ) {
     if ("-*+/".includes(targetValue)) {
+      clearDisplayMsg();
       operatorStr = targetValue;
 
       updateDisplay();
     } else if (targetValue === "." && !secondNumberStr.includes(".")) {
+      clearDisplayMsg();
       secondNumberStr += targetValue;
 
       updateDisplay();
     } else if ("0123456789".includes(targetValue)) {
+      clearDisplayMsg();
       secondNumberStr += targetValue;
 
       updateDisplay();
     }
   } else {
     if ("0123456789".includes(targetValue)) {
+      clearDisplayMsg();
       secondNumberStr += targetValue;
 
       updateDisplay();
     } else if (targetValue === "." && !secondNumberStr.includes(".")) {
+      clearDisplayMsg();
       secondNumberStr += targetValue;
 
       updateDisplay();
@@ -133,23 +169,23 @@ function btnInteraction(event) {
     } else if ("-*+/".includes(targetValue) && secondNumberStr === ".") {
       return;
     } else if ("-*+/".includes(targetValue)) {
-      firstNumberStr = operate(
-        operatorStr,
-        firstNumberStr,
-        secondNumberStr,
-      ).toString();
+      clearDisplayMsg();
+      operate(operatorStr, firstNumberStr, secondNumberStr);
       operatorStr = targetValue;
       secondNumberStr = "";
+      if (displayMsg !== "" && isResult === false) {
+        isResult = true;
+      }
       updateDisplay();
     } else if (secondNumberStr !== "." && "=".includes(targetValue)) {
-      firstNumberStr = operate(
-        operatorStr,
-        firstNumberStr,
-        secondNumberStr,
-      ).toString();
+      clearDisplayMsg();
+      operate(operatorStr, firstNumberStr, secondNumberStr);
 
       operatorStr = "";
       secondNumberStr = "";
+      if (displayMsg === "" && isResult === false) {
+        isResult = true;
+      }
 
       updateDisplay();
     }
@@ -158,6 +194,8 @@ function btnInteraction(event) {
   lg("firstNumberStr: " + firstNumberStr);
   lg("operatorStr: " + operatorStr);
   lg("secondNumberStr: " + secondNumberStr);
+  lg("isResult: " + isResult);
+  lg("displayMsg: " + displayMsg);
 }
 
 function updateDisplay() {
@@ -185,11 +223,22 @@ function updateDisplay() {
   secondDigit.classList = "second-digit";
   secondDigit.textContent = secondNumberStr;
   display.appendChild(secondDigit);
+
+  const msgDigit = document.createElement("span");
+  msgDigit.classList = "msg-digit";
+  msgDigit.textContent = displayMsg;
+  display.appendChild(msgDigit);
 }
 
 function clearDisplay() {
   while (display.firstChild) {
     display.removeChild(display.firstChild);
+  }
+}
+
+function clearDisplayMsg() {
+  if (displayMsg !== "") {
+    displayMsg = "";
   }
 }
 
@@ -199,19 +248,23 @@ const acBtn = document.querySelector("#allClearBtn");
 
 acBtn.addEventListener("click", () => {
   let display = document.getElementById("display");
-  if (display.textContent.length > 0) {
-    display.textContent = "";
-  }
+
   firstNumberStr = "";
   secondNumberStr = "";
   operatorStr = "";
+  displayMsg = "";
+  isResult = false;
 
+  updateDisplay();
   lg("---------------------");
   lg("firstNumberStr: " + firstNumberStr);
   lg("operatorStr: " + operatorStr);
   lg("secondNumberStr: " + secondNumberStr);
+  lg("isResult: " + isResult);
+  lg("displayMsg: " + displayMsg);
 });
 
+// Backspace Key Support
 const delBtn = document.querySelector("#delBtn");
 
 delBtn.addEventListener("click", () => {
@@ -222,17 +275,7 @@ delBtn.addEventListener("click", () => {
   }
 });
 
-// const bodyTxt = document.querySelector("body");
-// bodyTxt.addEventListener("keydown", (event) => {
-//   if (!Number.isNaN(parseInt(event.key))) {
-//     lg(`You pressed "${event.key}".`);
-//     const text = document.createElement("span");
-//     text.classList = "display-digit";
-//     text.textContent = event.key;
-//     display.appendChild(text);
-//   }
-// });
-
+// Keyboard Support
 const bodyTxt = document.querySelector("body");
 bodyTxt.addEventListener("keydown", (event) => {
   if ("0123456789".includes(event.key)) {
