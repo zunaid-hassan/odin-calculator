@@ -123,8 +123,8 @@ function btnInteraction(event) {
 
       updateDisplay();
     } else if (
-      ("-*+/".includes(targetValue) && firstNumberStr === ".") ||
-      firstNumberStr === "-"
+      "-*+/".includes(targetValue) &&
+      (firstNumberStr === "." || firstNumberStr === "-")
     ) {
       return;
     } else if ("-*+/".includes(targetValue)) {
