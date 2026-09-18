@@ -268,7 +268,6 @@ function acBtnInteraction() {
   isResult = false;
 
   updateDisplay();
-  logVariables();
 }
 
 //  Backspace Key Support
@@ -278,21 +277,21 @@ delBtn.addEventListener("click", deleteBtnInteraction);
 
 function deleteBtnInteraction(event) {
   if (displayMsg !== "") {
-    lg(displayMsg);
+    // lg(displayMsg);
     return;
   } else if (secondNumberStr !== "") {
     secondNumberStr = secondNumberStr.substring(0, secondNumberStr.length - 1);
-    lg(secondNumberStr);
+    // lg(secondNumberStr);
     // logVariables();
     updateDisplay();
   } else if (operatorStr !== "") {
     operatorStr = "";
-    lg(secondNumberStr);
+    // lg(secondNumberStr);
     // logVariables();
     updateDisplay();
   } else if (firstNumberStr !== "" && isResult === false) {
     firstNumberStr = firstNumberStr.substring(0, firstNumberStr.length - 1);
-    lg(firstNumberStr);
+    // lg(firstNumberStr);
     // logVariables();
     updateDisplay();
   }
@@ -329,7 +328,6 @@ function kbdKeydown(event) {
     const btn = document.querySelector(`button[value="="]`);
     btn.click();
     btn.classList.add("equal-btn-active");
-    lg(btn.className);
   }
 }
 
