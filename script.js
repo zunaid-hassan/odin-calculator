@@ -24,7 +24,7 @@ function divide(firstNumber, secondNumber) {
     secondNumberStr = "";
     operatorStr = "";
     isResult = false;
-    displayMsg = "Nice try!";
+    displayMsg = "No! 😠";
   } else {
     firstNumberStr = parseFloat((firstNumber / secondNumber).toFixed(6));
   }
@@ -51,9 +51,7 @@ const btnContainer = document.querySelector("#buttons-container");
 btnContainer.addEventListener("click", btnInteraction);
 
 function btnInteraction(event) {
-  const target = event.target;
   const targetValue = event.target.value;
-  const targetText = event.target.textContent;
 
   if (event.target.tagName !== "BUTTON") {
     return;
@@ -124,7 +122,10 @@ function btnInteraction(event) {
       firstNumberStr += targetValue;
 
       updateDisplay();
-    } else if ("-*+/".includes(targetValue) && firstNumberStr === ".") {
+    } else if (
+      ("-*+/".includes(targetValue) && firstNumberStr === ".") ||
+      firstNumberStr === "-"
+    ) {
       return;
     } else if ("-*+/".includes(targetValue)) {
       clearDisplayMsg();
@@ -195,7 +196,7 @@ function btnInteraction(event) {
       updateDisplay();
     }
   }
-  logVariables();
+  // logVariables();
 }
 
 // Display Update
@@ -282,59 +283,77 @@ function deleteBtnInteraction(event) {
   } else if (secondNumberStr !== "") {
     secondNumberStr = secondNumberStr.substring(0, secondNumberStr.length - 1);
     lg(secondNumberStr);
-    logVariables();
+    // logVariables();
     updateDisplay();
   } else if (operatorStr !== "") {
     operatorStr = "";
     lg(secondNumberStr);
-    logVariables();
+    // logVariables();
     updateDisplay();
   } else if (firstNumberStr !== "" && isResult === false) {
     firstNumberStr = firstNumberStr.substring(0, firstNumberStr.length - 1);
     lg(firstNumberStr);
-    logVariables();
+    // logVariables();
     updateDisplay();
   }
 }
 
-//  Keyboard Support
-// const bodyTxt = document.querySelector("body");
-// bodyTxt.addEventListener("keydown", (event) => {
-//   if ("0123456789".includes(event.key)) {
-//     lg(`You pressed "${event.key}".`);
-//     const text = document.createElement("span");
-//     text.classList = "display-digit";
-//     text.textContent = event.key;
-//     display.appendChild(text);
-//   } else if ("-=*+/".includes(event.key)) {
-//     lg(`You pressed "${event.key}".`);
-//     const text = document.createElement("span");
-//     text.classList = "display-digit";
-//     text.textContent = event.key;
-//     display.appendChild(text);
-//   }
-// });
-
 const kbdEvent = document.querySelector("body");
-kbdEvent.addEventListener("keydown", kbdInteraction);
+kbdEvent.addEventListener("keydown", kbdKeydown);
+kbdEvent.addEventListener("keyup", kbdKeyup);
 
-function kbdInteraction(event) {
+function kbdKeydown(event) {
+  if (event.repeat) return;
+  if (event.ctrlKey || event.altKey || event.metaKey) return;
   const eventKey = event.key;
+
   if (eventKey === "Delete" || eventKey === "Backspace") {
     if (eventKey === "Backspace") {
-      document.querySelector("#delBtn").click();
+      const btn = document.querySelector("#delBtn");
+      btn.click();
+      btn.classList.add("clear-btn-active");
     } else {
-      document.querySelector("#allClearBtn").click();
+      const btn = document.querySelector("#allClearBtn");
+      btn.click();
+      btn.classList.add("clear-btn-active");
     }
-    // lg(eventKey);
   } else if ("0123456789-*+/.".includes(eventKey)) {
-    // const eventKeyNum = parseInt(eventKey);
-    document.querySelector(`button[value="${eventKey}"]`).click();
+    const btn = document.querySelector(`button[value="${eventKey}"]`);
+    btn.click();
+    if (btn.classList.contains("digit-btn")) {
+      btn.classList.add("digit-btn-active");
+    } else if (btn.classList.contains("operator-btn")) {
+      btn.classList.add("operator-btn-active");
+    }
   } else if (eventKey === "Enter") {
-    document.querySelector(`button[value="="]`).click();
-    lg(eventKey);
+    const btn = document.querySelector(`button[value="="]`);
+    btn.click();
+    btn.classList.add("equal-btn-active");
+    lg(btn.className);
   }
 }
 
-// let kbdEvent = new Event("keydown");
-// lg(kbdEvent);
+function kbdKeyup(event) {
+  if (event.repeat) return;
+  if (event.ctrlKey || event.altKey || event.metaKey) return;
+  const eventKey = event.key;
+  if (eventKey === "Delete" || eventKey === "Backspace") {
+    if (eventKey === "Backspace") {
+      const btn = document.querySelector("#delBtn");
+      btn.classList.remove("clear-btn-active");
+    } else {
+      const btn = document.querySelector("#allClearBtn");
+      btn.classList.remove("clear-btn-active");
+    }
+  } else if ("0123456789-*+/.".includes(eventKey)) {
+    const btn = document.querySelector(`button[value="${eventKey}"]`);
+    if (btn.classList.contains("digit-btn")) {
+      btn.classList.remove("digit-btn-active");
+    } else if (btn.classList.contains("operator-btn")) {
+      btn.classList.remove("operator-btn-active");
+    }
+  } else if (eventKey === "Enter") {
+    const btn = document.querySelector(`button[value="="]`);
+    btn.classList.remove("equal-btn-active");
+  }
+}

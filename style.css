@@ -27,8 +27,7 @@ h1 {
 #calculator-container {
   width: 300px;
   height: 500px;
-  border: 2px solid #576a8f;
-  background: linear-gradient(180deg, #a1c9e2 0%, #6594b1 50%);
+
   border-radius: 40px;
   align-self: center;
   display: flex;
@@ -51,7 +50,7 @@ h1 {
   /* flex-direction: row-reverse; */
   justify-content: flex-end;
   font-family: "JetBrains Mono", monospace;
-  font-size: 30px;
+  font-size: 35px;
   font-weight: bold;
   overflow: hidden;
   flex-wrap: wrap;
@@ -59,24 +58,9 @@ h1 {
 
 button {
   margin: auto;
-  /* background-color: #f2a65a; */
-  /* background: #f2a65a; */
-  background: linear-gradient(180deg, #f7bd87 0%, #f2a65a 50%);
-  border-style: outset;
+  /* border-style: outset; */
   border-radius: 5px;
-
-  /* transition-duration: 0.2s; */
-}
-
-button:hover {
-  background: #f0c294;
-}
-
-button:active {
-  /* background: #f0c294; */
-
-  background: linear-gradient(180deg, #f2a65a 0%, #f7bd87 50%);
-  border-style: inset;
+  border: 2px solid;
 }
 
 #buttons-container {
@@ -96,7 +80,10 @@ button:active {
 
   flex-grow: 1;
   /* outline: 1px dotted red; */
-  height: fit-content;
+}
+
+#buttons-container * {
+  /* outline: 1px dotted red; */
 }
 
 #first-row,
@@ -109,33 +96,84 @@ button:active {
   justify-content: space-evenly;
 }
 
-#numpad-container {
+#leftBtn-container {
   display: flex;
-  /* flex-wrap: wrap; */
   flex-direction: column;
-  /* padding-left: 30px;
-  padding-right: 5px; */
-  padding: 20px 5px 50px 30px;
+  padding: 0px 5px 0px 30px;
   /* outline: 1px dotted red; */
+  height: 325px;
+  flex-grow: 2;
 }
 
-#operationBtn-container {
+#rightBtn-container {
   display: flex;
-  /* flex-wrap: wrap; */
   flex-direction: column;
-  padding: 20px 30px 50px 50px;
-  padding-right: 30px;
-  padding-left: 5px;
+  padding: 0px 30px 0px 10px;
+  height: 325px;
+  width: 80px;
 }
 
-#equalBtn {
-  background: orange;
+#calculator-container {
+  border: 2px solid #ff788d;
+  background: #ff9d9d;
 }
-#equalBtn:hover {
+
+button:active {
+  /* border-style: inset; */
+}
+/* Clear Buttons */
+.clear-btn {
+  background-color: #fa5c5c;
+  border-color: #fb3c3c;
+}
+.clear-btn:hover,
+.clear-btn-hover {
+  background-color: #fd8a6b;
+}
+.clear-btn:active,
+.clear-btn-active {
+  background-color: #fec288;
+}
+/* Digit Buttons */
+.digit-btn {
+  background-color: #8cc0eb;
+  border-color: #4ba0e6;
+}
+.digit-btn:hover,
+.digit-btn-hover {
+  background-color: #bfddf0;
+}
+.digit-btn:active,
+.digit-btn-active {
+  background-color: #ffebcc;
+}
+/* Operator Buttons */
+.operator-btn {
+  background-color: #abe7b2;
+
+  border-color: #54b445;
+}
+.operator-btn:hover,
+.operator-btn-hover {
+  background-color: #cbf3bb;
+}
+.operator-btn:active,
+.operator-btn-active {
+  background-color: #ecf4e8;
+}
+/* Equal Button */
+#equalBtn {
+  background: #ffa500;
+
+  border-color: #b67600;
+}
+#equalBtn:hover,
+#equalBtn.equal-btn-hover {
   background: #ffb730;
 }
-#equalBtn:active {
-  background: rgb(255, 210, 125);
+#equalBtn:active,
+#equalBtn.equal-btn-active {
+  background: #ffd27d;
 }
 
 footer {
