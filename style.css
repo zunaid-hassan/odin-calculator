@@ -146,7 +146,7 @@ button:active {
 }
 .digit-btn:active,
 .digit-btn-active {
-  background-color: #ffebcc;
+  background-color: #ddeaf2;
 }
 /* Operator Buttons */
 .operator-btn {
