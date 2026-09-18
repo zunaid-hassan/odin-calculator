@@ -84,6 +84,7 @@ button {
 
 #buttons-container * {
   /* outline: 1px dotted red; */
+  gap: 5px;
 }
 
 #first-row,
