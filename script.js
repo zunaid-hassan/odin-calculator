@@ -324,7 +324,7 @@ function kbdKeydown(event) {
     } else if (btn.classList.contains("operator-btn")) {
       btn.classList.add("operator-btn-active");
     }
-  } else if (eventKey === "Enter") {
+  } else if (eventKey === "Enter" || eventKey === "=") {
     const btn = document.querySelector(`button[value="="]`);
     btn.click();
     btn.classList.add("equal-btn-active");
@@ -350,7 +350,7 @@ function kbdKeyup(event) {
     } else if (btn.classList.contains("operator-btn")) {
       btn.classList.remove("operator-btn-active");
     }
-  } else if (eventKey === "Enter") {
+  } else if (eventKey === "Enter" || eventKey === "=") {
     const btn = document.querySelector(`button[value="="]`);
     btn.classList.remove("equal-btn-active");
   }
