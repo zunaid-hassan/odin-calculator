@@ -12,7 +12,7 @@
 
 body {
   background: linear-gradient(360deg, #6fb8d8 0%, #aacddc 50%);
-  font-family: "Roboto", sans-serif;
+  font-family: "Ubuntu", sans-serif;
   text-align: center;
   min-height: 100vh;
   display: flex;
@@ -175,6 +175,13 @@ button:active {
 #equalBtn:active,
 #equalBtn.equal-btn-active {
   background: #ffd27d;
+}
+
+.explanation-text {
+  margin-top: auto;
+  margin-bottom: 0px;
+  font-size: 25px;
+  color: #004a6a;
 }
 
 footer {
