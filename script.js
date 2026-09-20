@@ -306,8 +306,15 @@ function kbdKeydown(event) {
   if (event.ctrlKey || event.altKey || event.metaKey) return;
   const eventKey = event.key;
 
-  if (eventKey === "Delete" || eventKey === "Backspace") {
-    if (eventKey === "Backspace") {
+  if (
+    eventKey === "Delete" ||
+    eventKey === "Backspace" ||
+    eventKey === "D" ||
+    eventKey === "d" ||
+    eventKey === "C" ||
+    eventKey === "c"
+  ) {
+    if (eventKey === "Backspace" || eventKey === "D" || eventKey === "d") {
       const btn = document.querySelector("#delBtn");
       btn.click();
       btn.classList.add("clear-btn-active");
@@ -335,8 +342,15 @@ function kbdKeyup(event) {
   if (event.repeat) return;
   if (event.ctrlKey || event.altKey || event.metaKey) return;
   const eventKey = event.key;
-  if (eventKey === "Delete" || eventKey === "Backspace") {
-    if (eventKey === "Backspace") {
+  if (
+    eventKey === "Delete" ||
+    eventKey === "Backspace" ||
+    eventKey === "D" ||
+    eventKey === "d" ||
+    eventKey === "C" ||
+    eventKey === "c"
+  ) {
+    if (eventKey === "Backspace" || eventKey === "D" || eventKey === "d") {
       const btn = document.querySelector("#delBtn");
       btn.classList.remove("clear-btn-active");
     } else {

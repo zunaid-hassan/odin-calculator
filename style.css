@@ -61,6 +61,7 @@ button {
   /* border-style: outset; */
   border-radius: 5px;
   border: 2px solid;
+  cursor: pointer;
 }
 
 #buttons-container {
@@ -182,6 +183,15 @@ button:active {
   margin-bottom: 0px;
   font-size: 25px;
   color: #004a6a;
+}
+
+#keyboard-icon {
+  display: inline-block;
+  transition-duration: 0.2s;
+}
+
+#keyboard-icon:hover {
+  transform: scale(1.2);
 }
 
 footer {
