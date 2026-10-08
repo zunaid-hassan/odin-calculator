@@ -70,6 +70,7 @@ function btnInteraction(event) {
       updateDisplay();
     } else if (targetValue === "." && !firstNumberStr.includes(".")) {
       clearDisplayMsg();
+      firstNumberStr = "0";
       firstNumberStr += targetValue;
 
       updateDisplay();
@@ -84,15 +85,15 @@ function btnInteraction(event) {
     operatorStr === "" &&
     secondNumberStr === ""
   ) {
-    if ("0123456789.".includes(targetValue)) {
+    if ("0123456789".includes(targetValue)) {
       clearDisplayMsg();
       firstNumberStr = targetValue;
       isResult = false;
 
       updateDisplay();
-    } else if (targetValue === "." && !firstNumberStr.includes(".")) {
+    } else if (targetValue === ".") {
       clearDisplayMsg();
-      firstNumberStr = "";
+      firstNumberStr = "0";
       firstNumberStr += targetValue;
 
       isResult = false;
@@ -118,9 +119,16 @@ function btnInteraction(event) {
 
       updateDisplay();
     } else if (targetValue === "." && !firstNumberStr.includes(".")) {
-      clearDisplayMsg();
-      firstNumberStr += targetValue;
+      if (firstNumberStr === "-") {
+        firstNumberStr = "-0";
+        firstNumberStr += targetValue;
+      } else {
+        firstNumberStr += targetValue;
 
+        updateDisplay();
+      }
+
+      clearDisplayMsg();
       updateDisplay();
     } else if (
       "-*+/".includes(targetValue) &&
@@ -128,13 +136,18 @@ function btnInteraction(event) {
     ) {
       return;
     } else if ("-*+/".includes(targetValue)) {
+      if (firstNumberStr === "-0.") {
+        firstNumberStr = "-0.0";
+      } else if (firstNumberStr[firstNumberStr.length - 1] === ".") {
+        firstNumberStr += "0";
+      }
       clearDisplayMsg();
       operatorStr = targetValue;
 
       updateDisplay();
     }
   }
-  // BLOCK 4; only firstNumberStr filled operatorStr filled
+  // BLOCK 4; only firstNumberStr filled and operatorStr filled
   else if (
     firstNumberStr !== "" &&
     firstNumberStr !== "." &&
@@ -148,6 +161,7 @@ function btnInteraction(event) {
       updateDisplay();
     } else if (targetValue === "." && !secondNumberStr.includes(".")) {
       clearDisplayMsg();
+      secondNumberStr = "0";
       secondNumberStr += targetValue;
 
       updateDisplay();
