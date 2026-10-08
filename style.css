@@ -67,7 +67,6 @@ body {
   background: linear-gradient(360deg, #6fb8d8 0%, #aacddc 50%);
   font-family: "Ubuntu", sans-serif;
   text-align: center;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   gap: 15px;
