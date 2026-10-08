@@ -26,7 +26,7 @@ function divide(firstNumber, secondNumber) {
     isResult = false;
     displayMsg = "No! 😠";
   } else {
-    firstNumberStr = parseFloat((firstNumber / secondNumber).toFixed(6));
+    firstNumberStr = parseFloat((firstNumber / secondNumber).toFixed(10));
   }
 }
 
@@ -86,13 +86,11 @@ function btnInteraction(event) {
     secondNumberStr === ""
   ) {
     if ("0123456789".includes(targetValue)) {
-      clearDisplayMsg();
       firstNumberStr = targetValue;
       isResult = false;
 
       updateDisplay();
     } else if (targetValue === ".") {
-      clearDisplayMsg();
       firstNumberStr = "0";
       firstNumberStr += targetValue;
 
@@ -100,7 +98,6 @@ function btnInteraction(event) {
 
       updateDisplay();
     } else if ("-*+/".includes(targetValue)) {
-      clearDisplayMsg();
       operatorStr = targetValue;
 
       updateDisplay();
@@ -114,7 +111,6 @@ function btnInteraction(event) {
     secondNumberStr === ""
   ) {
     if ("0123456789".includes(targetValue)) {
-      clearDisplayMsg();
       firstNumberStr += targetValue;
 
       updateDisplay();
@@ -128,7 +124,6 @@ function btnInteraction(event) {
         updateDisplay();
       }
 
-      clearDisplayMsg();
       updateDisplay();
     } else if (
       "-*+/".includes(targetValue) &&
@@ -141,7 +136,6 @@ function btnInteraction(event) {
       } else if (firstNumberStr[firstNumberStr.length - 1] === ".") {
         firstNumberStr += "0";
       }
-      clearDisplayMsg();
       operatorStr = targetValue;
 
       updateDisplay();
@@ -155,18 +149,15 @@ function btnInteraction(event) {
     secondNumberStr === ""
   ) {
     if ("-*+/".includes(targetValue)) {
-      clearDisplayMsg();
       operatorStr = targetValue;
 
       updateDisplay();
     } else if (targetValue === "." && !secondNumberStr.includes(".")) {
-      clearDisplayMsg();
       secondNumberStr = "0";
       secondNumberStr += targetValue;
 
       updateDisplay();
     } else if ("0123456789".includes(targetValue)) {
-      clearDisplayMsg();
       secondNumberStr += targetValue;
 
       updateDisplay();
@@ -175,12 +166,10 @@ function btnInteraction(event) {
   // BLOCK 4; all firstNumberStr, operatorStr, and secondNumberStr are filled
   else {
     if ("0123456789".includes(targetValue)) {
-      clearDisplayMsg();
       secondNumberStr += targetValue;
 
       updateDisplay();
     } else if (targetValue === "." && !secondNumberStr.includes(".")) {
-      clearDisplayMsg();
       secondNumberStr += targetValue;
 
       updateDisplay();
@@ -189,7 +178,6 @@ function btnInteraction(event) {
     } else if ("-*+/".includes(targetValue) && secondNumberStr === ".") {
       return;
     } else if ("-*+/".includes(targetValue)) {
-      clearDisplayMsg();
       operate(operatorStr, firstNumberStr, secondNumberStr);
       operatorStr = targetValue;
       secondNumberStr = "";
@@ -198,7 +186,6 @@ function btnInteraction(event) {
       }
       updateDisplay();
     } else if (secondNumberStr !== "." && "=".includes(targetValue)) {
-      clearDisplayMsg();
       operate(operatorStr, firstNumberStr, secondNumberStr);
 
       operatorStr = "";
@@ -210,15 +197,14 @@ function btnInteraction(event) {
       updateDisplay();
     }
   }
-  // logVariables();
+  logVariables();
 }
 
 // Display Update
 const display = document.querySelector("#display");
+
 function updateDisplay() {
-  while (display.firstChild) {
-    display.removeChild(display.firstChild);
-  }
+  clearDisplay();
 
   const firstDigit = document.createElement("span");
   firstDigit.classList = "first-digit";
@@ -282,6 +268,10 @@ function acBtnInteraction() {
   isResult = false;
 
   updateDisplay();
+
+  const initialDigit = document.createElement("span");
+  initialDigit.textContent = "0";
+  display.appendChild(initialDigit);
 }
 
 //  Backspace Key Support
