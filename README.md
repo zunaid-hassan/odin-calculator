@@ -12,4 +12,4 @@ A browser-based calculator built with vanilla HTML, CSS, and JavaScript. Support
 
 ### Preview
 
-<img src="/img/Preview.png" width="400" alt="Preview">
+<img src="./img/Preview.png" width="400" alt="Preview">
